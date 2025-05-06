@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import { ResponseJSON, Sensus, Annotations } from "../customTypes/data";
+import { CustomLineChart } from "@/components/line-chart";
+import { CustomPieChart } from "@/components/pie-chart";
 
 export default function Home() {
   const [sensusList, setSensusList] = useState<Sensus[]>([]);
@@ -38,17 +40,37 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="w-full h-screen">
+    <div className="w-full min-h-screen">
       <header className="w-full flex justify-start items-center m-auto">
-        <div className="h-16 max-w-[1400px] w-full flex flex-col gap-4 justify-center items-center m-auto p-16">
+        <div className="max-w-[1400px] w-full flex flex-col gap-6 justify-center items-center m-auto p-8">
           <h1 className="font-bold text-3xl">
             {sensusOrg !== null && sensusOrg.source_name}
           </h1>
           <p className="text-[18px]">
             {sensusOrg !== null && sensusOrg.source_description}
           </p>
+          <div className="w-full flex justify-between">
+            <div>
+              <p>{sensusOrg && sensusOrg.dataset_name}</p>
+            </div>
+            <div>
+              <p>{sensusOrg && sensusOrg.topic}</p>
+            </div>
+            <div>
+              <p>{sensusOrg && sensusOrg.subtopic}</p>
+            </div>
+            <div>
+              <p>{sensusOrg && sensusOrg.dataset_link}</p>
+            </div>
+          </div>
         </div>
       </header>
+      <main className="w-full flex justify-center">
+        <div className="flex max-w-[1400px] w-full justify-between gap-12">
+          <CustomLineChart />
+          <CustomPieChart />
+        </div>
+      </main>
     </div>
   );
 }

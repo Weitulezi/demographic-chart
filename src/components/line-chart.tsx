@@ -1,5 +1,5 @@
 "use client";
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
+import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 
 import {
   Card,
@@ -50,6 +50,7 @@ export function CustomLineChart({ sensusList }: { sensusList: Sensus[] }) {
               tickMargin={8}
               tickFormatter={(value) => value}
             />
+            <YAxis domain={[0, 500000000]} />
             <ChartTooltip
               cursor={true}
               content={<ChartTooltipContent hideLabel />}

@@ -1,126 +1,74 @@
 "use client";
 
-import * as React from "react";
-import { TrendingUp } from "lucide-react";
-import { Label, Pie, PieChart } from "recharts";
-
+import { Cell, LabelList, Pie, PieChart } from "recharts";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-const chartData = [
-  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-  { browser: "firefox", visitors: 287, fill: "var(--color-firefox)" },
-  { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-  { browser: "other", visitors: 190, fill: "var(--color-other)" },
-];
+import { Sensus } from "@/customTypes/data";
+import { useEffect, useState } from "react";
 
-const chartConfig = {
-  visitors: {
-    label: "Visitors",
-  },
-  chrome: {
-    label: "Chrome",
-    color: "var(--chart-1)",
-  },
-  safari: {
-    label: "Safari",
-    color: "var(--chart-2)",
-  },
-  firefox: {
-    label: "Firefox",
-    color: "var(--chart-3)",
-  },
-  edge: {
-    label: "Edge",
-    color: "var(--chart-4)",
-  },
-  other: {
-    label: "Other",
-    color: "var(--chart-5)",
-  },
-} satisfies ChartConfig;
+export function CustomPieChart({ sensusList }: { sensusList: Sensus[] }) {
+  const [colors, setColors] = useState<string[]>([]);
 
-export function CustomPieChart() {
-  const totalVisitors = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.visitors, 0);
-  }, []);
+  const generateColors = (length: number): string[] => {
+    let availableColors = [
+      "var(--chart-1)",
+      "var(--chart-2)",
+      "var(--chart-3)",
+      "var(--chart-4)",
+    ];
+    let colorIndex = -1;
+    let result = [];
+    for (let i = 0; i < length; i++) {
+      result.push(availableColors[colorIndex]);
+      colorIndex += 1;
+      if (colorIndex >= availableColors.length) {
+        colorIndex = 0;
+      }
+    }
+    return result;
+  };
+
+  useEffect(() => {
+    setColors(generateColors(sensusList.length));
+  }, [sensusList]);
 
   return (
     <Card className="w-[50%] flex flex-col">
       <CardHeader className="items-center pb-0">
-        <CardTitle>Pie Chart - Donut with Text</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardTitle>Pie Chart - Label List</CardTitle>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
-          config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px]"
+          config={{}}
+          className="mx-auto aspect-square max-h-[250px] [&_.recharts-text]:fill-background"
         >
           <PieChart>
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <Pie
-              data={chartData}
-              dataKey="visitors"
-              nameKey="browser"
-              innerRadius={60}
-              strokeWidth={5}
-            >
-              <Label
-                content={({ viewBox }) => {
-                  if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                    return (
-                      <text
-                        x={viewBox.cx}
-                        y={viewBox.cy}
-                        textAnchor="middle"
-                        dominantBaseline="middle"
-                      >
-                        <tspan
-                          x={viewBox.cx}
-                          y={viewBox.cy}
-                          className="fill-foreground text-3xl font-bold"
-                        >
-                          {totalVisitors.toLocaleString()}
-                        </tspan>
-                        <tspan
-                          x={viewBox.cx}
-                          y={(viewBox.cy || 0) + 24}
-                          className="fill-muted-foreground"
-                        >
-                          Visitors
-                        </tspan>
-                      </text>
-                    );
-                  }
-                }}
+            <ChartTooltip content={<ChartTooltipContent />} />
+            <Pie data={sensusList} dataKey="Population">
+              <LabelList
+                dataKey="ID Year"
+                className="fill-background"
+                stroke="none"
+                fontSize={12}
+                formatter={(value: string) => value}
               />
+              {sensusList.map((_, index) => {
+                return (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={colors[index % colors.length]}
+                    name={`Population`}
+                  />
+                );
+              })}
             </Pie>
           </PieChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col gap-2 text-sm">
-        <div className="flex items-center gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div>
-        <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
-        </div>
-      </CardFooter>
     </Card>
   );
 }

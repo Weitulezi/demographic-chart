@@ -1,5 +1,4 @@
 "use client";
-import { TrendingUp } from "lucide-react";
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 
 import {
@@ -16,34 +15,28 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-];
+
+import { Sensus } from "@/customTypes/data";
+import { useEffect, useState } from "react";
 
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "var(--chart-1)",
+  population: {
+    label: "Population",
+    color: "var(--chart-2)",
   },
 } satisfies ChartConfig;
 
-export function CustomLineChart() {
+export function CustomLineChart({ sensusList }: { sensusList: Sensus[] }) {
   return (
     <Card className="w-[50%] ">
       <CardHeader>
-        <CardTitle>Line Chart - Linear</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardTitle>Year - Population</CardTitle>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
           <LineChart
             accessibilityLayer
-            data={chartData}
+            data={sensusList}
             margin={{
               left: 12,
               right: 12,
@@ -51,34 +44,26 @@ export function CustomLineChart() {
           >
             <CartesianGrid vertical={true} />
             <XAxis
-              dataKey="month"
+              dataKey="ID Year"
               tickLine={true}
               axisLine={true}
               tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 3)}
+              tickFormatter={(value) => value}
             />
             <ChartTooltip
-              cursor={false}
+              cursor={true}
               content={<ChartTooltipContent hideLabel />}
             />
             <Line
-              dataKey="desktop"
+              dataKey="Population"
               type="linear"
-              stroke="var(--color-desktop)"
+              stroke="var(--color-population)"
               strokeWidth={2}
               dot={true}
             />
           </LineChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div>
-        <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
-        </div>
-      </CardFooter>
     </Card>
   );
 }

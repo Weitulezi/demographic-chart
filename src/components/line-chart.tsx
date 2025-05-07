@@ -1,14 +1,7 @@
 "use client";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
@@ -17,7 +10,6 @@ import {
 } from "@/components/ui/chart";
 
 import { Sensus } from "@/customTypes/data";
-import { useEffect, useState } from "react";
 
 const chartConfig = {
   population: {
@@ -30,7 +22,7 @@ export function CustomLineChart({ sensusList }: { sensusList: Sensus[] }) {
   return (
     <Card className="w-[50%] ">
       <CardHeader>
-        <CardTitle>Year - Population</CardTitle>
+        <CardTitle>Population by Year</CardTitle>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>

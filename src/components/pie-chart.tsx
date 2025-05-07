@@ -22,7 +22,7 @@ export function CustomPieChart({ sensusList }: { sensusList: Sensus[] }) {
       "var(--chart-3)",
       "var(--chart-4)",
     ];
-    let colorIndex = -1;
+    let colorIndex = 0;
     let result = [];
     for (let i = 0; i < length; i++) {
       result.push(availableColors[colorIndex]);
@@ -42,7 +42,7 @@ export function CustomPieChart({ sensusList }: { sensusList: Sensus[] }) {
   return (
     <Card className="w-[50%] flex flex-col">
       <CardHeader className="items-center pb-0">
-        <CardTitle>Year - Population</CardTitle>
+        <CardTitle>Population by Year</CardTitle>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer

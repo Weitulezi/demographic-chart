@@ -96,20 +96,19 @@ export default function Home() {
       </header>
       <main className="max-w-[1400px] m-auto w-full flex justify-center flex-col items-center">
         <div className="flex justify-center items-center p-5 gap-4">
-          <>
-            <YearSelect
-              key={"start year select"}
-              title={"start year"}
-              years={years}
-              updateYear={setStartYear}
-            />
-            <YearSelect
-              key={"end year select"}
-              title={"end year"}
-              years={years}
-              updateYear={setEndYear}
-            />
-          </>
+          <span>Filter by range</span>
+          <YearSelect
+            key={"start year select"}
+            title={"start year"}
+            years={years}
+            updateYear={setStartYear}
+          />
+          <YearSelect
+            key={"end year select"}
+            title={"end year"}
+            years={years}
+            updateYear={setEndYear}
+          />
         </div>
         <div className="flex max-w-[1400px] w-[90%] lg:w-full justify-between gap-12">
           <CustomLineChart sensusList={filteredSensusList} />

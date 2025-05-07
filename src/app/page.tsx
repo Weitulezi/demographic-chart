@@ -96,7 +96,7 @@ export default function Home() {
       </header>
       <main className="max-w-[1400px] m-auto w-full flex justify-center flex-col items-center">
         <div className="flex justify-center items-center p-5 gap-4">
-          <span>Filter by range</span>
+          <span>Filter by Year</span>
           <YearSelect
             key={"start year select"}
             title={"start year"}

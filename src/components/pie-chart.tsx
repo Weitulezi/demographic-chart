@@ -3,6 +3,7 @@
 import { Cell, LabelList, Pie, PieChart } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
+  ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
@@ -12,6 +13,7 @@ import { useEffect, useState } from "react";
 
 export function CustomPieChart({ sensusList }: { sensusList: Sensus[] }) {
   const [colors, setColors] = useState<string[]>([]);
+  const [chartData, setChartData] = useState<Sensus[]>([]);
 
   const generateColors = (length: number): string[] => {
     let availableColors = [
@@ -34,6 +36,7 @@ export function CustomPieChart({ sensusList }: { sensusList: Sensus[] }) {
 
   useEffect(() => {
     setColors(generateColors(sensusList.length));
+    setChartData(sensusList);
   }, [sensusList]);
 
   return (
@@ -48,7 +51,7 @@ export function CustomPieChart({ sensusList }: { sensusList: Sensus[] }) {
         >
           <PieChart>
             <ChartTooltip content={<ChartTooltipContent />} />
-            <Pie data={sensusList} dataKey="Population">
+            <Pie data={chartData} dataKey="Population">
               <LabelList
                 dataKey="ID Year"
                 className="fill-background"
@@ -56,7 +59,7 @@ export function CustomPieChart({ sensusList }: { sensusList: Sensus[] }) {
                 fontSize={12}
                 formatter={(value: string) => value}
               />
-              {sensusList.map((_, index) => {
+              {chartData.map((_, index) => {
                 return (
                   <Cell
                     key={`cell-${index}`}

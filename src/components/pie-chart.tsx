@@ -39,7 +39,7 @@ export function CustomPieChart({ sensusList }: { sensusList: Sensus[] }) {
   return (
     <Card className="w-[50%] flex flex-col">
       <CardHeader className="items-center pb-0">
-        <CardTitle>Pie Chart - Label List</CardTitle>
+        <CardTitle>Year - Population</CardTitle>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer

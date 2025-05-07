@@ -66,23 +66,35 @@ export default function Home() {
           <p className="text-[18px] text-center">
             {sensusOrg !== null && sensusOrg.source_description}
           </p>
-          <div className="w-full flex justify-between">
-            <div>
-              <p>Dataset: {sensusOrg && sensusOrg.dataset_name}</p>
+          <div className="w-full flex flex-col justify-between lg:flex-row border-t-[1px] border-l-[1px]">
+            <div className="w-full border-r-[1px] border-b-[1px] flex justify-center items-center p-2">
+              <p>
+                <span className="font-bold">Dataset :</span>{" "}
+                {sensusOrg && sensusOrg.dataset_name}
+              </p>
             </div>
-            <div>
-              <p>Topic: {sensusOrg && sensusOrg.topic}</p>
+            <div className="w-full border-r-[1px] border-b-[1px] flex justify-center items-center p-2">
+              <p>
+                <span className="font-bold">Topic :</span>{" "}
+                {sensusOrg && sensusOrg.topic}
+              </p>
             </div>
-            <div>
-              <p>Sub-Topic: {sensusOrg && sensusOrg.subtopic}</p>
+            <div className="w-full border-r-[1px] border-b-[1px] flex justify-center items-center p-2">
+              <p>
+                <span className="font-bold">Sub-Topic :</span>{" "}
+                {sensusOrg && sensusOrg.subtopic}
+              </p>
             </div>
-            <div>
-              <p>Source: {sensusOrg && sensusOrg.dataset_link}</p>
+            <div className="w-full border-r-[1px] border-b-[1px] flex justify-center items-center p-2">
+              <p>
+                <span className="font-bold">Source :</span>{" "}
+                {sensusOrg && sensusOrg.dataset_link}
+              </p>
             </div>
           </div>
         </div>
       </header>
-      <main className="w-full flex justify-center flex-col items-center">
+      <main className="max-w-[1400px] m-auto w-full flex justify-center flex-col items-center">
         <div className="flex justify-center items-center p-5 gap-4">
           <>
             <YearSelect
@@ -99,7 +111,7 @@ export default function Home() {
             />
           </>
         </div>
-        <div className="flex max-w-[1400px] w-full sm:w-[90%] justify-between gap-12">
+        <div className="flex max-w-[1400px] w-[90%] lg:w-full justify-between gap-12">
           <CustomLineChart sensusList={filteredSensusList} />
           <CustomPieChart sensusList={filteredSensusList} />
         </div>
